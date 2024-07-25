@@ -3,14 +3,14 @@ package router
 import "net/http"
 
 type (
-	EncodeContext[E any] interface {
+	EC[E any] interface {
 		Request() *http.Request
 		Response() http.ResponseWriter
 
 		Encode(E) error
 	}
 
-	Context[D, E any] interface {
+	C[D, E any] interface {
 		Request() *http.Request
 		Response() http.ResponseWriter
 
@@ -27,7 +27,7 @@ type context[D Decoder[DT], E Encoder[ET], DT, ET any] struct {
 	e E
 }
 
-func NewContext[D Decoder[DT], E Encoder[ET], DT, ET any](w http.ResponseWriter, r *http.Request) Context[DT, ET] {
+func NewContext[D Decoder[DT], E Encoder[ET], DT, ET any](w http.ResponseWriter, r *http.Request) C[DT, ET] {
 	return &context[D, E, DT, ET]{
 		w: w,
 		r: r,

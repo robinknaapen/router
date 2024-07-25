@@ -8,7 +8,7 @@ import (
 
 func ExampleNewRouter() {
 	r := router.NewRouter[router.JSON[string], router.JSON[string]]()
-	r.GET(`/`, func(c router.EncodeContext[string]) {
+	r.GET(`/`, func(c router.EC[string]) {
 		c.Response().WriteHeader(http.StatusOK)
 	})
 
@@ -22,10 +22,10 @@ type Admin struct {
 
 func admin() http.Handler {
 	r := router.NewRouter[router.JSON[Admin], router.None]()
-	r.GET(`/`, func(c router.EncodeContext[router.None]) {
+	r.GET(`/`, func(c router.EC[router.None]) {
 		c.Response().WriteHeader(http.StatusOK)
 	})
-	r.POST(`/`, func(c router.Context[Admin, router.None]) {
+	r.POST(`/`, func(c router.C[Admin, router.None]) {
 		c.Response().WriteHeader(http.StatusOK)
 	})
 
@@ -35,7 +35,7 @@ func admin() http.Handler {
 
 func adminUsers() http.Handler {
 	r := router.NewRouter[router.None, router.None]()
-	r.GET(`/`, func(c router.EncodeContext[router.None]) {
+	r.GET(`/`, func(c router.EC[router.None]) {
 		c.Response().WriteHeader(http.StatusOK)
 	})
 
